@@ -95,24 +95,29 @@ gamesCard.innerHTML = GAMES_JSON.length;
 // show only games that do not yet have enough funding
 function filterUnfundedOnly() {
   deleteChildElements(gamesContainer);
+  const unfundedGames = GAMES_JSON.filter((game) => game.pledged < game.goal); //only games where pledged < goal
+  addGamesToPage(unfundedGames);
+  console.log("Unfunded games:", unfundedGames.length);
 
   // use filter() to get a list of games that have not yet met their goal
-
   // use the function we previously created to add the unfunded games to the DOM
 }
 
 // show only games that are fully funded
 function filterFundedOnly() {
   deleteChildElements(gamesContainer);
+  const fundedGames = GAMES_JSON.filter((game) => game.pledged >= game.goal);
+  addGamesToPage(fundedGames);
+  console.log("Funded games:", fundedGames.length);
 
   // use filter() to get a list of games that have met or exceeded their goal
-
   // use the function we previously created to add unfunded games to the DOM
 }
 
 // show all games
 function showAllGames() {
   deleteChildElements(gamesContainer);
+  addGamesToPage(GAMES_JSON);
 
   // add all games from the JSON data to the DOM
 }
@@ -123,6 +128,9 @@ const fundedBtn = document.getElementById("funded-btn");
 const allBtn = document.getElementById("all-btn");
 
 // add event listeners with the correct functions to each button
+unfundedBtn.addEventListener("click", filterUnfundedOnly);
+fundedBtn.addEventListener("click", filterFundedOnly);
+allBtn.addEventListener("click", showAllGames);
 
 /*************************************************************************************
  * Challenge 6: Add more information at the top of the page about the company.
